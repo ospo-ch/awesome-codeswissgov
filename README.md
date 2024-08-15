@@ -1,8 +1,8 @@
-[DE](./README.de.md) [FR](./README.fr.md) [IT](./README.it.md) [RM](./README.rm.md) [EN](./README.md)
-
 # Awesome CodeSwissGov
 
-This repository contains a list of organization accounts where swiss authorities publish their source code.
+_[Deutsch](./README.de.md)_, _[Français](./README.fr.md)_, _[Italiano](./README.it.md)_, _[Rumantsch](./README.rm.md)_, _[English](./README.md)_
+
+A list of public source codes from swiss authorities.
 
 ## Swiss Federal Services
 
@@ -20,40 +20,39 @@ This repository contains a list of organization accounts where swiss authorities
 | Swiss Geoportal                           | [Link](https://github.com/geoadmin)             |
 | Federal Institute of Metrology            | [Link](https://github.com/metas-ch)             |
 
-## Cantons (Alphabetical Order)
+## Cantonal Services (Alphabetical Order)
 
-| Canton                 | Scope          | Link                                                                  |
-| ---------------------- | -------------- | --------------------------------------------------------------------- |
-| Aargau                 | Global         | [Canton of Aargau](https://github.com/kanton-aargau)                  |
-| Appenzell Ausserrhoden |                |
-| Appenzell Innerrhoden  | Global         | [Canton of Appenzell Innerrhoden](https://github.com/KTAI-GIS)        |
-| Basel-Land             | Data           | [Open Data](https://github.com/ogd-bl)                                |
-| Basel-Stadt            | Data           | [Open Data](https://github.com/opendatabs)                            |
-| Bern                   | Global         | [Canton of Bern](https://github.com/kanton-bern)                      |
-| Fribourg               |                |
-| Geneva                 | Global         | [Canton of Geneva](https://github.com/republique-et-canton-de-geneve) |
-| Glarus                 |                |
-| Graubüden              |                |
-| Jura                   |                |
-| Lucerne                |                |
-| Neuchâtel              | Global         | [Canton of Neuchatel](https://github.com/sitn)                        |
-| Nidwalden              |                |
-| Obwalden               |                |
-| Schaffhausen           |                |
-| Schwyz                 |                |
-| Solothurn              | Geoinformation | [Geoinformation](https://github.com/sogis)                            |
-| St. Gallen             | Department     | [Office of Statistics](https://github.com/statistikSG)                |
-| Thurgau                | Data           | [Open Data](https://github.com/ogdtg)                                 |
-| Ticino                 |                |
-| Uri                    |                |
-| Valais                 |                |
-| Vaud                   | Department     | [IT Office](https://github.com/dsi-vd)                                |
-| Zug                    |                |
-| Zürich                 | Department     | [Office of Statistics I](https://github.com/statistikstadtzuerich)    |
-| Zürich                 | Department     | [Office of Statistics II](https://github.com/statistikZH)             |
-| Zürich                 | Department     | [Transport Authority](https://github.com/VerkehrsbetriebeZuerich)     |
-| Zürich                 | Department     | [Nature Conservation](https://github.com/FNSKtZH)                     |
-| Zürich                 | Geoinformation | [Geoinformation](https://github.com/gisktzh)                          |
-| Zürich                 | Data           | [Open Data](https://github.com/opendatazurich)                        |
-| Zürich                 | Data           | [Open Data - Specialist Unit](https://github.com/openZH)              |
-| Zürich                 |                |
+| Canton                 | Link                                                            |
+| ---------------------- | --------------------------------------------------------------- |
+| Aargau                 | [GitHub Org](https://github.com/kanton-aargau)                  |
+| Appenzell Ausserrhoden |                                                                 |
+| Appenzell Innerrhoden  | [GitHub Org](https://github.com/KTAI-GIS)                       |
+| Basel-Land             | [Open Data](https://github.com/ogd-bl)                          |
+| Basel-Stadt            | [Open Data](https://github.com/opendatabs)                      |
+| Bern                   | [GitHub Org](https://github.com/kanton-bern)                    |
+| Fribourg               |                                                                 |
+| Geneva                 | [GitHub Org](https://github.com/republique-et-canton-de-geneve) |
+| Glarus                 |                                                                 |
+| Graubüden              |                                                                 |
+| Jura                   |                                                                 |
+| Lucerne                |                                                                 |
+| Neuchâtel              | [GitHub Org](https://github.com/sitn)                           |
+| Nidwalden              |                                                                 |
+| Obwalden               |                                                                 |
+| Schaffhausen           |                                                                 |
+| Schwyz                 |                                                                 |
+| Solothurn              | [Geoinformation](https://github.com/sogis)                      |
+| St. Gallen             | [Office of Statistics](https://github.com/statistikSG)          |
+| Thurgau                | [Open Data](https://github.com/ogdtg)                           |
+| Ticino                 |                                                                 |
+| Uri                    |                                                                 |
+| Valais                 |                                                                 |
+| Vaud                   | [IT Office](https://github.com/dsi-vd)                          |
+| Zug                    |                                                                 |
+| Zürich                 | [Statistics I](https://github.com/statistikstadtzuerich)        |
+| Zürich                 | [Office of Statistics II](https://github.com/statistikZH)       |
+| Zürich                 | [Transport](https://github.com/VerkehrsbetriebeZuerich)         |
+| Zürich                 | [Nature Conservation](https://github.com/FNSKtZH)               |
+| Zürich                 | [Geoinformation](https://github.com/gisktzh)                    |
+| Zürich                 | [Open Data](https://github.com/opendatazurich)                  |
+| Zürich                 | [Open Data - Specialist Unit](https://github.com/openZH)        |
