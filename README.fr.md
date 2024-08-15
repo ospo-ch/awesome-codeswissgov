@@ -20,7 +20,7 @@ Une liste de codes sources publics des autorités suisses.
 | Géoportail Suisse                   | [Link](https://github.com/geoadmin)             |
 | Institut fédéral de métrologie      | [Link](https://github.com/metas-ch)             |
 
-## Services Cantonaux (Ordre Alphabétique)
+## Services Cantonaux
 
 | Canton                       | Link                                                        |
 | ---------------------------- | ----------------------------------------------------------- |

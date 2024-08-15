@@ -20,7 +20,7 @@ Eine Liste öffentlicher Quellcodes von Schweizer Behörden.
 | Schweizer Geoportal                       | [Link](https://github.com/geoadmin)             |
 | Eidgenössisches Institut für Metrologie   | [Link](https://github.com/metas-ch)             |
 
-## Kantonale Dienste (alphabetische Reihenfolge)
+## Kantonale Dienste
 
 | Kanton                 | Link                                                            |
 | ---------------------- | --------------------------------------------------------------- |
