@@ -20,7 +20,7 @@ Ina glista dals codes da funtauna publics dad autoritads svizras.
 | Geoportal svizzer                       | [Link](https://github.com/geoadmin)             |
 | Institut federal da metrologia          | [Link](https://github.com/metas-ch)             |
 
-## Servetschs chantunals (incumbensa alfabetica)
+## Servetschs chantunals
 
 | Chantun           | Link                                                            |
 | ----------------- | --------------------------------------------------------------- |
