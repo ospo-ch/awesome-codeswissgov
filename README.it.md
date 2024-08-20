@@ -19,6 +19,7 @@ Un elenco di codici sorgente pubblici delle autorità svizzere.
 | Ufficio federale di statistica         | [Link](https://github.com/BFS-SHS-MSAS)         |
 | Geoportale svizzero                    | [Link](https://github.com/geoadmin)             |
 | Istituto federale di metrologia        | [Link](https://github.com/metas-ch)             |
+| Piattaforma di interoperabilità i14y   | [Link](https://github.com/I14Y-ch)              |
 
 ## Servizi cantonali
 
