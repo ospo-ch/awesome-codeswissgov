@@ -19,6 +19,7 @@ A list of public source codes from swiss authorities.
 | Federal Office of Statistics              | [Link](https://github.com/BFS-SHS-MSAS)         |
 | Swiss Geoportal                           | [Link](https://github.com/geoadmin)             |
 | Federal Institute of Metrology            | [Link](https://github.com/metas-ch)             |
+| i14y Interoperability Platform            | [Link](https://github.com/I14Y-ch)              |
 
 ## Cantonal Services (Alphabetical Order)
 

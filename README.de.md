@@ -19,6 +19,7 @@ Eine Liste öffentlicher Quellcodes von Schweizer Behörden.
 | Bundesamt für Statistik                   | [Link](https://github.com/BFS-SHS-MSAS)         |
 | Schweizer Geoportal                       | [Link](https://github.com/geoadmin)             |
 | Eidgenössisches Institut für Metrologie   | [Link](https://github.com/metas-ch)             |
+| i14y Interoperabilitätsplattform          | [Link](https://github.com/I14Y-ch)              |
 
 ## Kantonale Dienste
 

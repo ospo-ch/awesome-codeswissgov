@@ -19,6 +19,7 @@ Ina glista dals codes da funtauna publics dad autoritads svizras.
 | Uffizi federal da statistica            | [Link](https://github.com/BFS-SHS-MSAS)         |
 | Geoportal svizzer                       | [Link](https://github.com/geoadmin)             |
 | Institut federal da metrologia          | [Link](https://github.com/metas-ch)             |
+| i14y Plattafurma d'interoperabilitad    | [Link](https://github.com/I14Y-ch)              | 
 
 ## Servetschs chantunals
 
