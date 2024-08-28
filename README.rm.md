@@ -56,4 +56,5 @@ Turich|[Transport](https://github.com/VerkehrsbetriebeZuerich)
 Turich|[Nature Conservation](https://github.com/FNSKtZH)
 Turich|[Geoinformation](https://github.com/gisktzh)
 Turich|[Open Data](https://github.com/opendatazurich)
-Turich|[Open Data - Specialist Unit](https://github.com/openZH
+Turich|[Open Data - Specialist Unit](https://github.com/openZH)
+Turich|[AI + Machine Learning](https://github.com/machinelearningZH)

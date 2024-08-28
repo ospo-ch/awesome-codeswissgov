@@ -63,6 +63,7 @@ Zürich|[Nature Conservation](https://github.com/FNSKtZH)
 Zürich|[Geoinformation](https://github.com/gisktzh)
 Zürich|[Open Data](https://github.com/opendatazurich)
 Zürich|[Open Data - Specialist Unit](https://github.com/openZH)
+Zürich|[AI + Machine Learning](https://github.com/machinelearningZH)
 
 <!-- END CANTONAL LIST -->
 
