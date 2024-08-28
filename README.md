@@ -38,7 +38,7 @@ Basel-Land|[Open Data](https://github.com/ogd-bl)
 Basel-Stadt|[Open Data](https://github.com/opendatabs)
 Bern|[GitHub Org](https://github.com/kanton-bern)
 Fribourg|[GitHub Org]
-Geneva|[GitHub Org](https://github.com/republique-et-canton-de-geneve)|
+Geneva|[GitHub Org](https://github.com/republique-et-canton-de-geneve)
 Glarus|[GitHub Org]
 Graubüden|[GitHub Org]
 Jura|[GitHub Org]
