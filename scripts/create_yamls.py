@@ -57,8 +57,15 @@ def parse_row(row: str):
     """
     row_data = row.split("|")
     name = row_data[0]
-    link_title = row_data[1].strip().split("]")[0][1:]
-    link_url = row_data[1].strip().split("](")[1][:-1]
+    link_title = ""
+    link_url = ""
+
+    if len(row_data) > 1:
+        title, url = row_data[1].strip().split("]", maxsplit=1)
+        link_title = title[1:]
+
+        if "(" in url and ")" in url:
+            link_url = url[1:-1]
 
     return dict(
         name=name,
@@ -93,14 +100,26 @@ def create_yaml_files():
         data = parse_row(row)
         file_name = convert_to_filename("_".join(("admin", data["name"])))
         with open(f"data/{file_name}.yaml", "w") as file:
-            yaml.dump(data, file, default_flow_style=False, allow_unicode=True)
+            yaml.dump(
+                data,
+                file,
+                default_flow_style=False,
+                allow_unicode=True,
+                sort_keys=False,
+            )
 
     # process canton data
     for row in canton:
         data = parse_row(row)
         file_name = convert_to_filename("_".join((data["name"], data["link_title"])))
         with open(f"data/{file_name}.yaml", "w") as file:
-            yaml.dump(data, file, default_flow_style=False, allow_unicode=True)
+            yaml.dump(
+                data,
+                file,
+                default_flow_style=False,
+                allow_unicode=True,
+                sort_keys=False,
+            )
 
 
 if __name__ == "__main__":

@@ -32,30 +32,30 @@ i14y Interoperability Platform|[Link](https://github.com/I14Y-ch)
 |Canton|Link|
 |------|----|
 Aargau|[GitHub Org](https://github.com/kanton-aargau)
-Appenzell Ausserrhoden|[GitHub Org]()
+Appenzell Ausserrhoden|[GitHub Org]
 Appenzell Innerrhoden|[GitHub Org](https://github.com/KTAI-GIS)
 Basel-Land|[Open Data](https://github.com/ogd-bl)
 Basel-Stadt|[Open Data](https://github.com/opendatabs)
 Bern|[GitHub Org](https://github.com/kanton-bern)
-Fribourg|[GitHub Org]()
+Fribourg|[GitHub Org]
 Geneva|[GitHub Org](https://github.com/republique-et-canton-de-geneve)|
-Glarus|[GitHub Org]()
-Graubüden|[GitHub Org]()
-Jura|[GitHub Org]()
-Lucerne|[GitHub Org]()
+Glarus|[GitHub Org]
+Graubüden|[GitHub Org]
+Jura|[GitHub Org]
+Lucerne|[GitHub Org]
 Neuchâtel|[GitHub Org](https://github.com/sitn)
-Nidwalden|[GitHub Org]()
-Obwalden|[GitHub Org]()
-Schaffhausen|[GitHub Org]()
-Schwyz|[GitHub Org]()
+Nidwalden|[GitHub Org]
+Obwalden|[GitHub Org]
+Schaffhausen|[GitHub Org]
+Schwyz|[GitHub Org]
 Solothurn|[Geoinformation](https://github.com/sogis)
 St. Gallen|[Office of Statistics](https://github.com/statistikSG)
 Thurgau|[Open Data](https://github.com/ogdtg)
-Ticino|[GitHub Org]()
-Uri|[GitHub Org]()
-Valais|[GitHub Org]()
+Ticino|[GitHub Org]
+Uri|[GitHub Org]
+Valais|[GitHub Org]
 Vaud|[IT Office](https://github.com/dsi-vd)
-Zug|[GitHub Org]()
+Zug|[GitHub Org]
 Zürich|[Statistics I](https://github.com/statistikstadtzuerich)
 Zürich|[Office of Statistics II](https://github.com/statistikZH)
 Zürich|[Transport](https://github.com/VerkehrsbetriebeZuerich)
