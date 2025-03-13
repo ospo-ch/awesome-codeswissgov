@@ -10,18 +10,31 @@ A list of public source codes from swiss authorities.
 
 |Service|Link|
 |-------|----|
-Swiss E-ID Ecosystem|[Link](https://github.com/e-id-admin)
-Swiss Federal Chancellery|[Link](https://github.com/swiss)
-Open Government Data|[Link](https://github.com/ogdch)
-Swiss Federal Archives|[Link](https://github.com/SwissFederalArchives)
-Federal Food Safety and Veterinary Office|[Link](https://github.com/BLV-OSAV-USAV)
-Swiss Federal Office of Energy|[Link](https://github.com/SFOE)
 Swiss Admin|[Link](https://github.com/admin-ch)
 Public Employment Service|[Link](https://github.com/alv-ch)
+Armasuisse S+T|[Link](https://github.com/armasuissewt)
 Federal Office of Statistics|[Link](https://github.com/BFS-SHS-MSAS)
+Federal Food Safety and Veterinary Office|[Link](https://github.com/BLV-OSAV-USAV)
+CDC-SI|[Link](https://github.com/cdc-si/)
+Data Science Competence Center|[Link](https://github.com/dscc-admin-ch)
+Federal Office of Information Technology, Systems and Telecommunication|[Link](https://github.com/estv-admin)
+Federal Office for the Environment|[Link](https://github.com/foen-admin-ch)
+Federal Statistical Office - Prices|[Link](https://github.com/FSO-PRICES)
 Swiss Geoportal|[Link](https://github.com/geoadmin)
+Coordination Agency for the Preservation of Electronic Files|[Link](https://github.com/KOST-CECO)
+MeteoSwiss|[Link](https://github.com/MeteoSwiss)
+Open Government Data|[Link](https://github.com/ogdch)
+Open Data Portal|[Link](https://github.com/opendata-swiss)
+Federal Office of Energy|[Link](https://github.com/SFOE)
+Federal Chancellery|[Link](https://github.com/swiss)
+Swiss Armed Forces|[Link](https://github.com/Swiss-Armed-Forces)
+Territorial Data Lab|[Link](https://github.com/swiss-territorial-data-lab)
+Federal Archives|[Link](https://github.com/SwissFederalArchives)
+Federal Office of Topography|[Link](https://github.com/swisstopo)
+Swiss National Library|[Link](https://github.com/SwissNationalLibrary)
 Federal Institute of Metrology|[Link](https://github.com/metas-ch)
 i14y Interoperability Platform|[Link](https://github.com/I14Y-ch)
+Swiss E-ID Ecosystem|[Link](https://github.com/e-id-admin)
 
 <!-- END FEDERAL LIST -->
 
