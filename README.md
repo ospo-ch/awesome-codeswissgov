@@ -1,7 +1,5 @@
 # Awesome CodeSwissGov
 
-_[Deutsch](./README.de.md)_, _[Français](./README.fr.md)_, _[Italiano](./README.it.md)_, _[Rumantsch](./README.rm.md)_, _[English](./README.md)_
-
 A list of public source codes from swiss authorities.
 
 ## Swiss Federal Services
