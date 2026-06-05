@@ -1,0 +1,15 @@
+# Tooling configuration for awesome-codeswissgov.
+# Runtime deps live in requirements.txt; dev deps in requirements-dev.txt.
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+
+[tool.pytest.ini_options]
+# The generator lives in scripts/ (no package yet — that arrives in Epic 1),
+# so expose it on the path for imports in tests.
+pythonpath = ["scripts"]
+testpaths = ["tests"]
