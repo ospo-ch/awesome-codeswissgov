@@ -1,313 +1,401 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "organizations": [
     {
       "name": "Armasuisse S+T",
       "authority": "federal",
       "url": "https://github.com/armasuissewt",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "CDC-SI",
       "authority": "federal",
       "url": "https://github.com/cdc-si/",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Coordination Agency for the Preservation of Electronic Files",
       "authority": "federal",
       "url": "https://github.com/KOST-CECO",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Data Science Competence Center",
       "authority": "federal",
       "url": "https://github.com/dscc-admin-ch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Archives",
       "authority": "federal",
       "url": "https://github.com/SwissFederalArchives",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Chancellery",
       "authority": "federal",
       "url": "https://github.com/swiss",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Food Safety and Veterinary Office",
       "authority": "federal",
       "url": "https://github.com/BLV-OSAV-USAV",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Institute of Metrology",
       "authority": "federal",
       "url": "https://github.com/metas-ch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Office for the Environment",
       "authority": "federal",
       "url": "https://github.com/foen-admin-ch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Office of Energy",
       "authority": "federal",
       "url": "https://github.com/SFOE",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Office of Information Technology, Systems and Telecommunication",
       "authority": "federal",
       "url": "https://github.com/estv-admin",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Office of Statistics",
       "authority": "federal",
       "url": "https://github.com/BFS-SHS-MSAS",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Office of Topography",
       "authority": "federal",
       "url": "https://github.com/swisstopo",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Federal Statistical Office - Prices",
       "authority": "federal",
       "url": "https://github.com/FSO-PRICES",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "i14y Interoperability Platform",
       "authority": "federal",
       "url": "https://github.com/I14Y-ch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "MeteoSwiss",
       "authority": "federal",
       "url": "https://github.com/MeteoSwiss",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Data Portal",
       "authority": "federal",
       "url": "https://github.com/opendata-swiss",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Government Data",
       "authority": "federal",
       "url": "https://github.com/ogdch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Public Employment Service",
       "authority": "federal",
       "url": "https://github.com/alv-ch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Swiss Admin",
       "authority": "federal",
       "url": "https://github.com/admin-ch",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Swiss Armed Forces",
       "authority": "federal",
       "url": "https://github.com/Swiss-Armed-Forces",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Swiss E-ID Ecosystem",
       "authority": "federal",
       "url": "https://github.com/e-id-admin",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Swiss Geoportal",
       "authority": "federal",
       "url": "https://github.com/geoadmin",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Swiss National Library",
       "authority": "federal",
       "url": "https://github.com/SwissNationalLibrary",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Territorial Data Lab",
       "authority": "federal",
       "url": "https://github.com/swiss-territorial-data-lab",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "GitHub Org",
       "authority": "canton:AG",
       "url": "https://github.com/kanton-aargau",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "GitHub Org",
       "authority": "canton:AI",
       "url": "https://github.com/KTAI-GIS",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Data",
       "authority": "canton:BL",
       "url": "https://github.com/ogd-bl",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Data",
       "authority": "canton:BS",
       "url": "https://github.com/opendatabs",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "GitHub Org",
       "authority": "canton:BE",
       "url": "https://github.com/kanton-bern",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "GitHub Org",
       "authority": "canton:GE",
       "url": "https://github.com/republique-et-canton-de-geneve",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "GitHub Org",
       "authority": "canton:NE",
       "url": "https://github.com/sitn",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Geoinformation",
       "authority": "canton:SO",
       "url": "https://github.com/sogis",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Office of Statistics",
       "authority": "canton:SG",
       "url": "https://github.com/statistikSG",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Data",
       "authority": "canton:TG",
       "url": "https://github.com/ogdtg",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "IT Office",
       "authority": "canton:VD",
       "url": "https://github.com/dsi-vd",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "AI + Machine Learning",
       "authority": "canton:ZH",
       "url": "https://github.com/machinelearningZH",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Geoinformation",
       "authority": "canton:ZH",
       "url": "https://github.com/gisktzh",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Nature Conservation",
       "authority": "canton:ZH",
       "url": "https://github.com/FNSKtZH",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Office of Statistics II",
       "authority": "canton:ZH",
       "url": "https://github.com/statistikZH",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Data",
       "authority": "canton:ZH",
       "url": "https://github.com/opendatazurich",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Open Data - Specialist Unit",
       "authority": "canton:ZH",
       "url": "https://github.com/openZH",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Statistics I",
       "authority": "canton:ZH",
       "url": "https://github.com/statistikstadtzuerich",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     },
     {
       "name": "Transport",
       "authority": "canton:ZH",
       "url": "https://github.com/VerkehrsbetriebeZuerich",
       "official": false,
-      "provenance": null
+      "provenance": null,
+      "harvested_at": null,
+      "repositories": []
     }
   ]
 }
