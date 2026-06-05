@@ -1,5 +1,23 @@
-# Tooling configuration for awesome-codeswissgov.
+# Build + tooling configuration for awesome-codeswissgov.
 # Runtime deps live in requirements.txt; dev deps in requirements-dev.txt.
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codeswissgov"
+version = "0.1.0"
+description = "Inventory tooling for Swiss public-sector open source (data/ -> README + inventory.json)."
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+# Single source of truth for pinned runtime deps.
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.ruff]
 line-length = 88
@@ -9,7 +27,7 @@ target-version = "py311"
 select = ["E", "F", "I", "W", "UP", "B"]
 
 [tool.pytest.ini_options]
-# The generator lives in scripts/ (no package yet — that arrives in Epic 1),
-# so expose it on the path for imports in tests.
-pythonpath = ["scripts"]
+# Source package lives under src/; the legacy generator still lives in scripts/
+# until it is retired at the end of Epic 1.
+pythonpath = ["src", "scripts"]
 testpaths = ["tests"]
