@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Unit tests for the Organization model."""
+"""Unit tests for the Organization and Repository models."""
 
 import pytest
 from pydantic import ValidationError
 
-from codeswissgov.models import Organization
+from codeswissgov.models import Organization, Repository
 
 
 def test_valid_federal_org():
@@ -95,3 +95,57 @@ def test_unknown_field_rejected():
             url="https://github.com/x",
             link_title="legacy field",
         )
+
+
+def test_repository_defaults():
+    repo = Repository(name="tool", url="https://github.com/swiss/tool")
+    assert repo.license is None
+    assert repo.language is None
+    assert repo.topics == []
+    assert repo.archived is False
+    assert repo.last_activity is None
+    assert repo.has_publiccode_yml is False
+    assert repo.has_security_md is False
+
+
+def test_repository_full_record():
+    repo = Repository(
+        name="tool",
+        url="https://github.com/swiss/tool",
+        license="MIT",
+        language="Python",
+        topics=["gov", "ch"],
+        archived=True,
+        last_activity="2026-01-15",
+        has_publiccode_yml=True,
+        has_security_md=True,
+    )
+    assert repo.license == "MIT"
+    assert repo.topics == ["gov", "ch"]
+    assert repo.archived is True
+
+
+def test_repository_missing_license_is_compliance_flag():
+    assert Repository(name="t", url="https://github.com/o/t").is_compliance_flag
+    licensed = Repository(name="t", url="https://github.com/o/t", license="Apache-2.0")
+    assert not licensed.is_compliance_flag
+
+
+def test_repository_name_is_stripped():
+    repo = Repository(name="  tool  ", url="https://github.com/o/tool")
+    assert repo.name == "tool"
+
+
+def test_repository_empty_name_rejected():
+    with pytest.raises(ValidationError, match="name must not be empty"):
+        Repository(name="   ", url="https://github.com/o/t")
+
+
+def test_repository_non_github_url_rejected():
+    with pytest.raises(ValidationError, match="github.com"):
+        Repository(name="t", url="https://gitlab.com/o/t")
+
+
+def test_repository_unknown_field_rejected():
+    with pytest.raises(ValidationError):
+        Repository(name="t", url="https://github.com/o/t", stars=5)
