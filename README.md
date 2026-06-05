@@ -43,30 +43,30 @@ Swiss E-ID Ecosystem|[Link](https://github.com/e-id-admin)
 |Canton|Link|
 |------|----|
 Aargau|[GitHub Org](https://github.com/kanton-aargau)
-Appenzell Ausserrhoden|[GitHub Org]
+Appenzell Ausserrhoden|— none known yet
 Appenzell Innerrhoden|[GitHub Org](https://github.com/KTAI-GIS)
 Basel-Land|[Open Data](https://github.com/ogd-bl)
 Basel-Stadt|[Open Data](https://github.com/opendatabs)
 Bern|[GitHub Org](https://github.com/kanton-bern)
-Fribourg|[GitHub Org]
+Fribourg|— none known yet
 Geneva|[GitHub Org](https://github.com/republique-et-canton-de-geneve)
-Glarus|[GitHub Org]
-Graubüden|[GitHub Org]
-Jura|[GitHub Org]
-Lucerne|[GitHub Org]
+Glarus|— none known yet
+Graubünden|— none known yet
+Jura|— none known yet
+Lucerne|— none known yet
 Neuchâtel|[GitHub Org](https://github.com/sitn)
-Nidwalden|[GitHub Org]
-Obwalden|[GitHub Org]
-Schaffhausen|[GitHub Org]
-Schwyz|[GitHub Org]
+Nidwalden|— none known yet
+Obwalden|— none known yet
+Schaffhausen|— none known yet
+Schwyz|— none known yet
 Solothurn|[Geoinformation](https://github.com/sogis)
 St. Gallen|[Office of Statistics](https://github.com/statistikSG)
 Thurgau|[Open Data](https://github.com/ogdtg)
-Ticino|[GitHub Org]
-Uri|[GitHub Org]
-Valais|[GitHub Org]
+Ticino|— none known yet
+Uri|— none known yet
+Valais|— none known yet
 Vaud|[IT Office](https://github.com/dsi-vd)
-Zug|[GitHub Org]
+Zug|— none known yet
 Zürich|[Statistics I](https://github.com/statistikstadtzuerich)
 Zürich|[Office of Statistics II](https://github.com/statistikZH)
 Zürich|[Transport](https://github.com/VerkehrsbetriebeZuerich)
