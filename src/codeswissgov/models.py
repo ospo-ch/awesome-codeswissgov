@@ -38,8 +38,9 @@ class Organization(BaseModel):
         name: Display name. For federal entries this is the service name; for
             cantonal entries it is the unit/org name (the README link label).
         authority: ``"federal"`` or ``"canton:<CODE>"`` (e.g. ``"canton:ZH"``).
-        url: GitHub organization URL, or ``None`` for a canton with no known
-            org (rendered as ``— none known yet``).
+        url: GitHub organization URL. Required: only real organizations are
+            stored. Cantons with no known org are *not* records here — the
+            renderer derives ``— none known yet`` from the canton list.
         official: Verified-official flag. Only ``True`` with recorded
             ``provenance`` (SPEC decision #5); otherwise the entry is a
             candidate.
@@ -51,7 +52,7 @@ class Organization(BaseModel):
 
     name: str
     authority: str
-    url: str | None = None
+    url: str
     official: bool = False
     provenance: str | None = None
 
@@ -79,13 +80,9 @@ class Organization(BaseModel):
 
     @field_validator("url")
     @classmethod
-    def _url_is_github(cls, value: str | None) -> str | None:
-        if value is None:
-            return value
+    def _url_is_github(cls, value: str) -> str:
         if not value.startswith(_GITHUB_PREFIX):
-            raise ValueError(
-                f"url must be a {_GITHUB_PREFIX} URL or null, got {value!r}"
-            )
+            raise ValueError(f"url must be a {_GITHUB_PREFIX} URL, got {value!r}")
         return value
 
     @model_validator(mode="after")
@@ -94,8 +91,6 @@ class Organization(BaseModel):
             raise ValueError(
                 "official=true requires non-empty provenance (SPEC decision #5)"
             )
-        if self.url is None and self.is_federal:
-            raise ValueError("a federal organization must have a url")
         return self
 
     @property
