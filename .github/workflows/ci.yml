@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Format check (ruff)
+        run: ruff format --check .
+
+      - name: Test (pytest)
+        run: pytest
+
+      - name: Verify data/ is in sync with README.md
+        run: |
+          python scripts/create_yamls.py
+          if [ -n "$(git status --porcelain data/)" ]; then
+            echo "::error::data/ is out of sync with README.md. Run 'python scripts/create_yamls.py' and commit the result."
+            git status --porcelain data/
+            exit 1
+          fi
