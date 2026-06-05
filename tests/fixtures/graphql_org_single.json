@@ -1,0 +1,38 @@
+{
+  "data": {
+    "organization": {
+      "repositories": {
+        "pageInfo": { "hasNextPage": false, "endCursor": "Y3Vyc29yOjI=" },
+        "nodes": [
+          {
+            "name": "open-tool",
+            "url": "https://github.com/admin-ch/open-tool",
+            "isArchived": false,
+            "pushedAt": "2026-01-15T10:30:00Z",
+            "primaryLanguage": { "name": "Python" },
+            "licenseInfo": { "spdxId": "MIT" },
+            "repositoryTopics": {
+              "nodes": [
+                { "topic": { "name": "government" } },
+                { "topic": { "name": "switzerland" } }
+              ]
+            },
+            "publiccode": { "__typename": "Blob" },
+            "security": { "__typename": "Blob" }
+          },
+          {
+            "name": "legacy-archive",
+            "url": "https://github.com/admin-ch/legacy-archive",
+            "isArchived": true,
+            "pushedAt": null,
+            "primaryLanguage": null,
+            "licenseInfo": null,
+            "repositoryTopics": { "nodes": [] },
+            "publiccode": null,
+            "security": null
+          }
+        ]
+      }
+    }
+  }
+}

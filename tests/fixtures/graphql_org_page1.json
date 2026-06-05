@@ -1,0 +1,22 @@
+{
+  "data": {
+    "organization": {
+      "repositories": {
+        "pageInfo": { "hasNextPage": true, "endCursor": "Y3Vyc29yOjE=" },
+        "nodes": [
+          {
+            "name": "alpha",
+            "url": "https://github.com/admin-ch/alpha",
+            "isArchived": false,
+            "pushedAt": "2026-02-01T08:00:00Z",
+            "primaryLanguage": { "name": "Go" },
+            "licenseInfo": { "spdxId": "Apache-2.0" },
+            "repositoryTopics": { "nodes": [] },
+            "publiccode": null,
+            "security": null
+          }
+        ]
+      }
+    }
+  }
+}
