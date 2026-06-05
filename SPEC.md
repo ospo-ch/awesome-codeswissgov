@@ -220,14 +220,16 @@ Fold in the audit backlog so the tool is solid before the refactor.
 - [x] CI gate is now `python -m codeswissgov validate` (schema-check + assert
       views up to date), replacing the old README→`data/` sync direction.
 
-### Epic 2 — Enrichment harvester (headline feature)
-- [ ] `harvest` expands each org into repos with license, language, topics,
+### Epic 2 — Enrichment harvester (headline feature) ✅ DONE
+- [x] `harvest` expands each org into repos with license, language, topics,
       activity, archived, `publiccode.yml`/`SECURITY.md` presence — written to
-      the generated **`inventory.json`**, not per-repo YAML (decision #7).
-- [ ] GraphQL, incremental + cached; read-only PAT lifts the rate limit
-      (decision #4).
-- [ ] Scheduled workflow opens an auto-PR with refreshed `inventory.json`
-      (human merges).
+      the generated **`inventory.json`** (v2.0, repos nested under each org),
+      not per-repo YAML (decision #7).
+- [x] GraphQL, incremental + cached; read-only PAT lifts the rate limit
+      (decision #4). `inventory.json` is itself the cache: a failed org keeps
+      its prior repositories rather than being dropped.
+- [x] Scheduled workflow (`harvest.yml`) opens an auto-PR with refreshed
+      `inventory.json` (human merges).
 
 ### Epic 3 — Ecosystem interop
 - [ ] Ingest `swiss/index` programmatically as the **federal source**, plus ≥1
