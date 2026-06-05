@@ -16,8 +16,13 @@
 
 import json
 
-from codeswissgov.models import Organization
-from codeswissgov.render.inventory import SCHEMA_VERSION, render_inventory
+from codeswissgov.models import Organization, Repository
+from codeswissgov.render.inventory import (
+    SCHEMA_VERSION,
+    OrgHarvest,
+    load_harvest,
+    render_inventory,
+)
 
 
 def _org(name, authority, handle):
@@ -37,8 +42,56 @@ def test_inventory_shape_and_fields():
             "url": "https://github.com/admin-ch",
             "official": False,
             "provenance": None,
+            "harvested_at": None,
+            "repositories": [],
         }
     ]
+
+
+def test_inventory_merges_harvested_repos():
+    org = _org("Swiss Admin", "federal", "admin-ch")
+    repo = Repository(
+        name="tool", url="https://github.com/admin-ch/tool", license="MIT"
+    )
+    harvest = {
+        org.url: OrgHarvest(harvested_at="2026-06-05T00:00:00Z", repositories=[repo])
+    }
+    entry = json.loads(render_inventory([org], harvest))["organizations"][0]
+    assert entry["harvested_at"] == "2026-06-05T00:00:00Z"
+    assert entry["repositories"] == [
+        {
+            "name": "tool",
+            "url": "https://github.com/admin-ch/tool",
+            "license": "MIT",
+            "language": None,
+            "topics": [],
+            "archived": False,
+            "last_activity": None,
+            "has_publiccode_yml": False,
+            "has_security_md": False,
+        }
+    ]
+
+
+def test_load_harvest_round_trips_repo_data():
+    org = _org("Swiss Admin", "federal", "admin-ch")
+    repo = Repository(name="tool", url="https://github.com/admin-ch/tool")
+    harvest = {
+        org.url: OrgHarvest(harvested_at="2026-06-05T00:00:00Z", repositories=[repo])
+    }
+    text = render_inventory([org], harvest)
+    reloaded = load_harvest(text)
+    assert reloaded == harvest
+
+
+def test_load_harvest_ignores_org_level_fields_and_blank():
+    assert load_harvest("") == {}
+    assert load_harvest("   ") == {}
+    # Org-level fields present but no repos -> empty OrgHarvest, not dropped.
+    text = render_inventory([_org("Swiss Admin", "federal", "admin-ch")])
+    assert load_harvest(text) == {
+        "https://github.com/admin-ch": OrgHarvest(harvested_at=None, repositories=[])
+    }
 
 
 def test_inventory_has_trailing_newline_and_preserves_unicode():

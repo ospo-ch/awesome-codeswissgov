@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .loader import load_organizations
-from .render.inventory import render_inventory
+from .render.inventory import load_harvest, render_inventory
 from .render.readme import render_readme
 
 # Repo root: src/codeswissgov/build.py -> parents[2].
@@ -39,15 +39,23 @@ class RenderResult:
 
 
 def render_all(root: Path = DEFAULT_ROOT) -> RenderResult:
-    """Render both views in memory (no writes). Used by build and validate."""
+    """Render both views in memory (no writes). Used by build and validate.
+
+    Repo-level harvest data lives only in ``inventory.json`` (SPEC decision #7),
+    so the prior file is read back and its ``repositories`` carried forward —
+    ``build`` regenerates org-level fields offline without discarding harvest.
+    """
     readme_path = root / "README.md"
     inventory_path = root / "inventory.json"
     orgs = load_organizations(root / "data" / "orgs")
+    prior_inventory = (
+        inventory_path.read_text(encoding="utf-8") if inventory_path.exists() else ""
+    )
     return RenderResult(
         readme_path=readme_path,
         readme_text=render_readme(orgs, readme_path.read_text(encoding="utf-8")),
         inventory_path=inventory_path,
-        inventory_text=render_inventory(orgs),
+        inventory_text=render_inventory(orgs, load_harvest(prior_inventory)),
     )
 
 
