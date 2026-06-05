@@ -12,26 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""CLI entry point: ``python -m codeswissgov <build|validate>``.
+"""CLI entry point: ``python -m codeswissgov <build|validate|harvest>``.
 
 ``build``    regenerate README.md + inventory.json from data/orgs.
 ``validate`` schema-check data/orgs and assert the generated views are current.
+``harvest``  enrich inventory.json with repo-level data from the GitHub API.
 """
 
+import os
 import sys
 
 from .build import build, validate
+from .harvest import run_harvest
 
-USAGE = "usage: python -m codeswissgov <build|validate>"
+USAGE = "usage: python -m codeswissgov <build|validate|harvest [--token TOKEN]>"
 
 
-def _cmd_build() -> int:
+def _cmd_build(args: list[str]) -> int:
     result = build()
     print(f"built {result.readme_path.name} and {result.inventory_path.name}")
     return 0
 
 
-def _cmd_validate() -> int:
+def _cmd_validate(args: list[str]) -> int:
     try:
         stale = validate()
     except ValueError as exc:
@@ -48,7 +51,41 @@ def _cmd_validate() -> int:
     return 0
 
 
-COMMANDS = {"build": _cmd_build, "validate": _cmd_validate}
+def _cmd_harvest(args: list[str]) -> int:
+    token = _token(args)
+    if not token:
+        print(
+            "harvest: a read-only token is required "
+            "(--token TOKEN or $GITHUB_TOKEN).",
+            file=sys.stderr,
+        )
+        return 2
+    summary = run_harvest(token)
+    print(
+        f"harvest: refreshed {summary.orgs_refreshed}/{summary.orgs_total} orgs, "
+        f"{summary.repos_total} repos in inventory.json"
+    )
+    if summary.orgs_failed:
+        print(
+            f"harvest: {len(summary.orgs_failed)} org(s) kept cached data: "
+            f"{', '.join(summary.orgs_failed)}",
+            file=sys.stderr,
+        )
+    # Non-zero only when nothing could be refreshed (e.g. a bad token).
+    return 1 if summary.orgs_failed and summary.orgs_refreshed == 0 else 0
+
+
+def _token(args: list[str]) -> str | None:
+    """Resolve a token from ``--token VALUE``/``--token=VALUE`` or env."""
+    for i, arg in enumerate(args):
+        if arg == "--token" and i + 1 < len(args):
+            return args[i + 1]
+        if arg.startswith("--token="):
+            return arg[len("--token=") :]
+    return os.environ.get("GITHUB_TOKEN")
+
+
+COMMANDS = {"build": _cmd_build, "validate": _cmd_validate, "harvest": _cmd_harvest}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -64,7 +101,7 @@ def main(argv: list[str] | None = None) -> int:
     if handler is None:
         print(USAGE, file=sys.stderr)
         return 2
-    return handler()
+    return handler(argv[1:])
 
 
 if __name__ == "__main__":
