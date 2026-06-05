@@ -80,36 +80,39 @@ Zürich|[Transport](https://github.com/VerkehrsbetriebeZuerich)
 
 ## Contributing
 
-`README.md` is the **single source of truth**. The lists above are the two
-markdown tables delimited by the `<!-- BEGIN/END FEDERAL LIST -->` and
-`<!-- BEGIN/END CANTONAL LIST -->` comments. The per-entry files under `data/`
-are **generated** from them — never edit `data/` by hand.
+`data/orgs/*.yaml` is the **source of truth** — one file per organization. The
+tables above and `inventory.json` are **generated views**; never edit them or
+the rows by hand (a build will overwrite your changes).
 
 To add or update an organization:
 
-1. Edit the relevant table in `README.md`. Each row is `Name|[Link text](url)`.
-   For an authority with no known GitHub org, use plain text (e.g.
-   `Canton|— none known yet`) instead of a link.
-2. Regenerate the data files:
-   ```sh
-   pip install -r requirements.txt
-   python scripts/create_yamls.py
+1. Add or edit a file under `data/orgs/`, e.g. `data/orgs/<github-handle>.yaml`:
+   ```yaml
+   name: Statistics I            # display name (service for federal; unit for cantonal)
+   authority: canton:ZH          # "federal" or "canton:<CODE>" (e.g. canton:BE)
+   url: https://github.com/statistikstadtzuerich
+   official: false               # true only with recorded provenance (see below)
+   provenance: null              # evidence source backing `official`
    ```
-   The generator is idempotent and self-cleaning (it removes `data/` files that
-   no longer match a row).
-3. Commit both the `README.md` and `data/` changes.
+   A canton with no known GitHub org needs **no** file — the build renders
+   `— none known yet` for it automatically.
+2. Regenerate the views:
+   ```sh
+   pip install -e .
+   python -m codeswissgov build
+   ```
+   The build is deterministic and self-cleaning (orphan rows cannot occur —
+   the tables are rebuilt from `data/orgs/` every time).
+3. Commit the `data/orgs/` change **and** the regenerated `README.md` and
+   `inventory.json`.
 
-Each generated file has the schema:
+`official: true` is only permitted with a non-empty `provenance` (a registry
+listing, a GitHub verified-domain match, or explicit confirmation); otherwise
+the entry is an unverified candidate.
 
-```yaml
-name: <display name>
-link_title: <link text, empty if none>
-link_url: <GitHub URL, empty if none>
-```
-
-Development tooling (optional): `pip install -r requirements-dev.txt` then
-`ruff check .` and `pytest`. CI enforces lint, tests, and that `data/` stays in
-sync with `README.md`.
+Development tooling: `pip install -r requirements-dev.txt` then `ruff check .`
+and `pytest`. CI runs lint, tests, and `python -m codeswissgov validate`, which
+fails if `data/orgs/` is invalid or the generated views are out of date.
 
 ## License 
 

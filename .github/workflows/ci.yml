@@ -16,7 +16,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r requirements-dev.txt
+        run: pip install -e . -r requirements-dev.txt
 
       - name: Lint (ruff)
         run: ruff check .
@@ -27,11 +27,5 @@ jobs:
       - name: Test (pytest)
         run: pytest
 
-      - name: Verify data/ is in sync with README.md
-        run: |
-          python scripts/create_yamls.py
-          if [ -n "$(git status --porcelain data/)" ]; then
-            echo "::error::data/ is out of sync with README.md. Run 'python scripts/create_yamls.py' and commit the result."
-            git status --porcelain data/
-            exit 1
-          fi
+      - name: Validate data/orgs and generated views are in sync
+        run: python -m codeswissgov validate
