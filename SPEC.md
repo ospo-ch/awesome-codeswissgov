@@ -274,6 +274,19 @@ Fold in the audit backlog so the tool is solid before the refactor.
 7. **Repo data volume → org-level YAML committed; repo data in `inventory.json`
    only.** No per-repo YAML files. `data/orgs/*.yaml` is the small curated
    source; `inventory.json` is the generated, diffable harvest artifact.
+8. **Epic 1 README ordering → deterministic re-sort (no order metadata).**
+   `build` sorts the federal table by service name and the cantonal table by
+   (canton, unit). Migration accepts a one-time, human-reviewed README reorder
+   (the 3 out-of-order federal late-adds + Zürich's sub-orgs) rather than
+   maintaining a hidden `order` field/manifest. Byte-stability means
+   *deterministic across builds*, not identical to the pre-flip README.
+9. **Epic 1 `Organization` shape → `{name, authority, url, official,
+   provenance}`.** publiccode-compatible curated fields only. The cantonal
+   table's first column is derived from the `authority` code (`canton:ZH` →
+   `Zürich`) via a 26-entry reference map; the federal link label is the
+   constant `Link`. Harvested fields (license/language/topics/activity/…) are
+   **not** in the org YAML — they land in `inventory.json` in Epic 2. In Epic 1,
+   `inventory.json` is **org-level only**.
 
 ---
 
