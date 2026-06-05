@@ -208,14 +208,17 @@ Fold in the audit backlog so the tool is solid before the refactor.
       README↔`data/` drift (the sync gate in `.github/workflows/ci.yml`).
 - [x] README has a "Contributing" section; unit tests cover the regression seeds.
 
-### Epic 1 — Architecture flip (+ schema shape)
-- [ ] `data/orgs/*.yaml` is source of truth; `python -m codeswissgov build`
-      regenerates `README.md` tables and `inventory.json` deterministically.
-- [ ] Existing entries migrated with no semantic loss (golden snapshot of README
-      is byte-stable across a build).
-- [ ] Org model shape is **`publiccode.yml`-compatible from the start**
-      (decision #6 — migrate the shape once, here, not twice).
-- [ ] CI `validate` gate now asserts `build` is up to date (not the old direction).
+### Epic 1 — Architecture flip (+ schema shape) ✅ DONE
+- [x] `data/orgs/*.yaml` is source of truth (44 org files); `python -m
+      codeswissgov build` regenerates `README.md` tables and `inventory.json`
+      deterministically (idempotent; golden tests assert sync).
+- [x] Existing entries migrated with no semantic loss; the one-time
+      deterministic re-sort (decision #8) is the only README data change.
+- [x] Org model shape is **`publiccode.yml`-compatible** (`Organization`:
+      `{name, authority, url, official, provenance}`; decisions #6/#9). No-org
+      cantons are derived, not stored (`url` required).
+- [x] CI gate is now `python -m codeswissgov validate` (schema-check + assert
+      views up to date), replacing the old README→`data/` sync direction.
 
 ### Epic 2 — Enrichment harvester (headline feature)
 - [ ] `harvest` expands each org into repos with license, language, topics,
