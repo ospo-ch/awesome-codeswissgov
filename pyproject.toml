@@ -27,7 +27,6 @@ target-version = "py311"
 select = ["E", "F", "I", "W", "UP", "B"]
 
 [tool.pytest.ini_options]
-# Source package lives under src/; the legacy generator still lives in scripts/
-# until it is retired at the end of Epic 1.
-pythonpath = ["src", "scripts"]
+# Source package lives under src/ (also installed editable in CI).
+pythonpath = ["src"]
 testpaths = ["tests"]
