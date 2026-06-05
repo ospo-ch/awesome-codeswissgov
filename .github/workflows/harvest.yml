@@ -1,0 +1,56 @@
+name: Harvest
+
+# Scheduled enrichment harvest (SPEC Epic 2): refresh repo-level data in
+# inventory.json from the GitHub API and open a PR for a human to merge.
+#
+# Requires a repository secret HARVEST_GITHUB_TOKEN: a read-only fine-grained
+# PAT (SPEC decision #4) used only to lift the API rate limit. The pull request
+# itself is opened with the default GITHUB_TOKEN.
+
+on:
+  schedule:
+    - cron: "0 4 * * 1" # Mondays 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -e . -r requirements-dev.txt
+
+      - name: Harvest repositories from GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.HARVEST_GITHUB_TOKEN }}
+        run: python -m codeswissgov harvest
+
+      - name: Rebuild generated views
+        run: python -m codeswissgov build
+
+      - name: Validate data/orgs and generated views are in sync
+        run: python -m codeswissgov validate
+
+      - name: Open pull request with refreshed inventory
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: harvest/refresh-inventory
+          delete-branch: true
+          commit-message: "chore(harvest): refresh inventory.json"
+          title: "chore(harvest): refresh inventory.json"
+          labels: harvest
+          body: |
+            Automated harvest of repo-level data (license, language, topics,
+            activity, archived, publiccode.yml / SECURITY.md presence) from the
+            GitHub API into `inventory.json`.
+
+            Review the `inventory.json` diff before merging.
