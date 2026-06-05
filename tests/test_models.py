@@ -42,35 +42,31 @@ def test_valid_cantonal_org():
     assert org.canton_code == "ZH"
 
 
-def test_cantonal_org_without_url_is_a_known_gap():
-    org = Organization(name="Jura", authority="canton:JU", url=None)
-    assert org.url is None
-    assert org.canton_code == "JU"
+def test_url_is_required():
+    # Cantons with no org are not records; every stored org has a url.
+    with pytest.raises(ValidationError):
+        Organization(name="Jura", authority="canton:JU")
 
 
 def test_name_is_stripped():
-    assert Organization(name="  Bern  ", authority="canton:BE", url=None).name == "Bern"
+    url = "https://github.com/kanton-bern"
+    assert Organization(name="  Bern  ", authority="canton:BE", url=url).name == "Bern"
 
 
 def test_empty_name_rejected():
     with pytest.raises(ValidationError, match="name must not be empty"):
-        Organization(name="   ", authority="canton:BE", url=None)
+        Organization(name="   ", authority="canton:BE", url="https://github.com/x")
 
 
 @pytest.mark.parametrize("authority", ["municipal", "canton:XX", "canton:", "FEDERAL"])
 def test_bad_authority_rejected(authority):
     with pytest.raises(ValidationError):
-        Organization(name="X", authority=authority, url=None)
+        Organization(name="X", authority=authority, url="https://github.com/x")
 
 
 def test_non_github_url_rejected():
     with pytest.raises(ValidationError, match="github.com"):
         Organization(name="X", authority="canton:ZH", url="https://gitlab.com/x")
-
-
-def test_federal_org_requires_url():
-    with pytest.raises(ValidationError, match="federal organization must have a url"):
-        Organization(name="X", authority="federal", url=None)
 
 
 def test_official_requires_provenance():
@@ -94,5 +90,8 @@ def test_official_with_provenance_is_valid():
 def test_unknown_field_rejected():
     with pytest.raises(ValidationError):
         Organization(
-            name="X", authority="canton:ZH", url=None, link_title="legacy field"
+            name="X",
+            authority="canton:ZH",
+            url="https://github.com/x",
+            link_title="legacy field",
         )
