@@ -114,6 +114,22 @@ Development tooling: `pip install -r requirements-dev.txt` then `ruff check .`
 and `pytest`. CI runs lint, tests, and `python -m codeswissgov validate`, which
 fails if `data/orgs/` is invalid or the generated views are out of date.
 
+### Repository-level data (harvest)
+
+`inventory.json` also carries **harvested** repo-level data per organization
+(license, language, topics, last activity, archived state, and `publiccode.yml`
+/ `SECURITY.md` presence). This is produced from the GitHub API — you do not
+edit it by hand:
+
+```sh
+python -m codeswissgov harvest --token "$GITHUB_TOKEN"   # read-only PAT
+```
+
+`harvest` is the only writer of repo-level data; `build` preserves it when it
+regenerates the views. A scheduled workflow refreshes it weekly and opens a PR.
+Coverage is **GitHub only** — authorities that publish solely off GitHub do not
+appear, so absence is not evidence that an authority publishes nothing.
+
 ## License 
 
 This repository assets, content and data folders are licensed under a [CC-BY license](./LICENSE). 
