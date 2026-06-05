@@ -57,3 +57,18 @@ def build(root: Path = DEFAULT_ROOT) -> RenderResult:
     result.readme_path.write_text(result.readme_text, encoding="utf-8")
     result.inventory_path.write_text(result.inventory_text, encoding="utf-8")
     return result
+
+
+def validate(root: Path = DEFAULT_ROOT) -> list[str]:
+    """Return the names of generated files that are out of date (empty = in sync).
+
+    Schema-checks ``data/orgs`` as a side effect of rendering; a violation
+    propagates as ``ValueError`` (naming the offending file).
+    """
+    result = render_all(root)
+    stale: list[str] = []
+    if result.readme_text != result.readme_path.read_text(encoding="utf-8"):
+        stale.append(result.readme_path.name)
+    if result.inventory_text != result.inventory_path.read_text(encoding="utf-8"):
+        stale.append(result.inventory_path.name)
+    return stale
