@@ -78,6 +78,39 @@ Zürich|[AI + Machine Learning](https://github.com/machinelearningZH)
 
 <!-- END CANTONAL LIST -->
 
+## Contributing
+
+`README.md` is the **single source of truth**. The lists above are the two
+markdown tables delimited by the `<!-- BEGIN/END FEDERAL LIST -->` and
+`<!-- BEGIN/END CANTONAL LIST -->` comments. The per-entry files under `data/`
+are **generated** from them — never edit `data/` by hand.
+
+To add or update an organization:
+
+1. Edit the relevant table in `README.md`. Each row is `Name|[Link text](url)`.
+   For an authority with no known GitHub org, use plain text (e.g.
+   `Canton|— none known yet`) instead of a link.
+2. Regenerate the data files:
+   ```sh
+   pip install -r requirements.txt
+   python scripts/create_yamls.py
+   ```
+   The generator is idempotent and self-cleaning (it removes `data/` files that
+   no longer match a row).
+3. Commit both the `README.md` and `data/` changes.
+
+Each generated file has the schema:
+
+```yaml
+name: <display name>
+link_title: <link text, empty if none>
+link_url: <GitHub URL, empty if none>
+```
+
+Development tooling (optional): `pip install -r requirements-dev.txt` then
+`ruff check .` and `pytest`. CI enforces lint, tests, and that `data/` stays in
+sync with `README.md`.
+
 ## License 
 
 This repository assets, content and data folders are licensed under a [CC-BY license](./LICENSE). 
