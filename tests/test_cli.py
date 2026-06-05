@@ -94,3 +94,65 @@ def test_cli_no_command_is_usage_error(capsys):
 
 def test_cli_unknown_command_is_usage_error():
     assert cli.main(["frobnicate"]) == 2
+
+
+# --- harvest command --------------------------------------------------------
+
+
+def test_harvest_requires_a_token(monkeypatch, capsys):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    assert cli.main(["harvest"]) == 2
+    assert "token is required" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "argv,env,expected",
+    [
+        (["harvest", "--token", "flag-tok"], None, "flag-tok"),
+        (["harvest", "--token=eq-tok"], None, "eq-tok"),
+        (["harvest"], "env-tok", "env-tok"),
+        (["harvest", "--token", "flag-wins"], "env-tok", "flag-wins"),
+    ],
+)
+def test_harvest_token_resolution(monkeypatch, argv, env, expected):
+    if env is None:
+        monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    else:
+        monkeypatch.setenv("GITHUB_TOKEN", env)
+    seen = {}
+
+    def fake_run_harvest(token):
+        seen["token"] = token
+        return _summary(refreshed=1)
+
+    monkeypatch.setattr(cli, "run_harvest", fake_run_harvest)
+    assert cli.main(argv) == 0
+    assert seen["token"] == expected
+
+
+def test_harvest_reports_failures_but_succeeds(monkeypatch, capsys):
+    monkeypatch.setattr(
+        cli, "run_harvest", lambda token: _summary(refreshed=3, failed=["x"])
+    )
+    assert cli.main(["harvest", "--token", "t"]) == 0
+    err = capsys.readouterr().err
+    assert "kept cached data" in err
+
+
+def test_harvest_returns_nonzero_when_nothing_refreshed(monkeypatch):
+    monkeypatch.setattr(
+        cli, "run_harvest", lambda token: _summary(refreshed=0, failed=["x", "y"])
+    )
+    assert cli.main(["harvest", "--token", "t"]) == 1
+
+
+def _summary(*, refreshed, failed=None):
+    from codeswissgov.harvest import HarvestSummary
+
+    failed = failed or []
+    return HarvestSummary(
+        orgs_total=refreshed + len(failed),
+        orgs_refreshed=refreshed,
+        repos_total=refreshed,
+        orgs_failed=failed,
+    )
