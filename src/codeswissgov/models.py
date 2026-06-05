@@ -19,7 +19,7 @@
 modelled here — they arrive in ``inventory.json`` in Epic 2 (decision #7).
 """
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from .cantons import CANTON_CODES
 
@@ -104,3 +104,57 @@ class Organization(BaseModel):
         if self.authority.startswith(CANTON_PREFIX):
             return self.authority[len(CANTON_PREFIX) :]
         return None
+
+
+class Repository(BaseModel):
+    """A harvested source repository belonging to an organization.
+
+    Repo-level records are *not* curated in ``data/orgs`` (SPEC decision #7);
+    they are produced by ``harvest`` from real GitHub API responses and live
+    only in the generated ``inventory.json``, nested under their organization.
+    ``authority`` is therefore omitted here (derivable from the parent org).
+
+    Attributes:
+        name: Repository name (within the org).
+        url: GitHub repository URL.
+        license: SPDX identifier, or ``None`` when no license is declared.
+            ``None`` is a compliance flag, not missing data.
+        language: Primary language reported by GitHub, or ``None``.
+        topics: Repository topics (may be empty).
+        archived: Whether GitHub marks the repo as archived.
+        last_activity: ISO-8601 date of the last push, or ``None``.
+        has_publiccode_yml: Whether a ``publiccode.yml`` exists at the repo root.
+        has_security_md: Whether a ``SECURITY.md`` exists at the repo root.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    url: str
+    license: str | None = None
+    language: str | None = None
+    topics: list[str] = Field(default_factory=list)
+    archived: bool = False
+    last_activity: str | None = None
+    has_publiccode_yml: bool = False
+    has_security_md: bool = False
+
+    @field_validator("name")
+    @classmethod
+    def _name_non_empty(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("name must not be empty")
+        return value
+
+    @field_validator("url")
+    @classmethod
+    def _url_is_github(cls, value: str) -> str:
+        if not value.startswith(_GITHUB_PREFIX):
+            raise ValueError(f"url must be a {_GITHUB_PREFIX} URL, got {value!r}")
+        return value
+
+    @property
+    def is_compliance_flag(self) -> bool:
+        """True when the repo lacks a declared license."""
+        return self.license is None
