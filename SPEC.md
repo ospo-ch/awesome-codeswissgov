@@ -231,11 +231,19 @@ Fold in the audit backlog so the tool is solid before the refactor.
 - [x] Scheduled workflow (`harvest.yml`) opens an auto-PR with refreshed
       `inventory.json` (human merges).
 
-### Epic 3 — Ecosystem interop
-- [ ] Ingest `swiss/index` programmatically as the **federal source**, plus ≥1
-      sibling registry to seed coverage (decision #1: superset + enrichment).
-- [ ] `inventory.json` documented & versioned; emit/consume `publiccode.yml`
-      for EU-ecosystem interop.
+### Epic 3 — Ecosystem interop (trimmed — see decision #10)
+- [x] Ingest `swiss/index` programmatically as the **federal source** (decision
+      #1: superset + enrichment). `python -m codeswissgov ingest` reconciles the
+      registry against `data/orgs` via a pluggable `RegistrySource` framework
+      and prints a **read-only** coverage-gap report (never auto-adds); against
+      live `swiss/index` it surfaces 24 missing federal orgs + the GitHub-only
+      skipped count.
+- [ ] ~~plus ≥1 sibling registry to seed coverage~~ — **deferred** (decision
+      #10): no foreign registry seeds *Swiss* coverage; the framework is
+      pluggable so a real Swiss second source (e.g. opendata.swiss) slots in
+      later.
+- [ ] ~~`inventory.json` documented & versioned; emit/consume `publiccode.yml`~~
+      — **deferred** (decision #10): speculative until a consumer exists.
 
 ### Epic 4 — Data integrity
 - [ ] Link-rot detection flags 404 / renamed / deleted orgs.
@@ -292,6 +300,19 @@ Fold in the audit backlog so the tool is solid before the refactor.
    constant `Link`. Harvested fields (license/language/topics/activity/…) are
    **not** in the org YAML — they land in `inventory.json` in Epic 2. In Epic 1,
    `inventory.json` is **org-level only**.
+10. **Epic 3 trimmed to the swiss/index ingest; rest deferred as YAGNI.** A live
+    diff showed the manual swiss/index sync had drifted (24 federal orgs missing
+    from `data/orgs`), so ingesting it is load-bearing and shipped: a pluggable
+    `RegistrySource` framework producing a **read-only** reconciliation report
+    (consistent with the "never auto-add" / "ask-first on data changes"
+    boundaries). The other Epic 3 criteria — a **≥1 sibling registry**, a formal
+    **`inventory.json` JSON Schema**, and **`publiccode.yml` emit/consume** —
+    are **deferred** because they have no current consumer: no *foreign*
+    registry seeds *Swiss* coverage (their entries filter out as non-Swiss), and
+    emitting/schematizing for an absent consumer is speculative. The framework
+    stays pluggable so each slots in when a real need appears (e.g. a Swiss
+    second source like opendata.swiss). Re-expanding Epic 3 is a normal
+    backlog decision, not an "ask-first" scope change.
 
 ---
 

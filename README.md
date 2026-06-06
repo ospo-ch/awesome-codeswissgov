@@ -130,6 +130,24 @@ regenerates the views. A scheduled workflow refreshes it weekly and opens a PR.
 Coverage is **GitHub only** — authorities that publish solely off GitHub do not
 appear, so absence is not evidence that an authority publishes nothing.
 
+### Ecosystem interop (ingest)
+
+The federal org list is meant to track the upstream
+[`swiss/index`](https://github.com/swiss/index) registry. `ingest` reconciles
+that registry (and any future sibling registries) against `data/orgs` and
+prints a **read-only** report — it never edits `data/orgs`:
+
+```sh
+python -m codeswissgov ingest        # no token needed (public registry)
+```
+
+The report lists orgs present in a registry but **missing** from `data/orgs`
+(the coverage gap to review), with a federal/cantonal hint from the registry's
+section. It is guidance only: a maintainer decides what to add and creates the
+`data/orgs/*.yaml` file by hand (with provenance), so curation stays human.
+Non-GitHub forges (e.g. GitLab entries in `swiss/index`) are reported as
+skipped — coverage is **GitHub only**.
+
 ## License 
 
 This repository assets, content and data folders are licensed under a [CC-BY license](./LICENSE). 
