@@ -227,6 +227,23 @@ run they degrade to a "run harvest" note while authority coverage still works
 from `data/orgs`. The report functions are pure (`render/reports.py`); file I/O
 is in `build.run_report`.
 
+## Governance & community
+
+Community-facing process lives in [CONTRIBUTING.md](./CONTRIBUTING.md) (scope,
+the "official" provenance policy, and how read-only tools surface gaps for human
+curation). The mechanics:
+
+- **Verified-official badge.** `render/readme.py` appends ` ✅` (`OFFICIAL_BADGE`)
+  to a table row when `org.official` is true. With every org currently
+  `official: false` the rendered README is byte-identical, so `validate` stays
+  green — the badge is dormant until provenance is curated.
+- **Suggestion template.** `.github/ISSUE_TEMPLATE/suggest-org.yml` is a GitHub
+  issue-form capturing name, org URL, authority, canton, and provenance;
+  `config.yml` disables blank issues and links to the guides.
+
+Setting `official: true` requires recorded `provenance` (the model enforces it);
+populating it across `data/orgs` is human curation, not an automated step.
+
 ## Testing & linting
 
 ```sh

@@ -28,6 +28,16 @@ FEDERAL_HEADER = "|Service|Link|\n|-------|----|\n"
 CANTONAL_HEADER = "|Canton|Link|\n|------|----|\n"
 # Rendered for a canton with no known GitHub org (derived, not stored).
 NONE_KNOWN = "— none known yet"
+# Appended to a row whose org is verified-official (SPEC decision #5). Dormant
+# until provenance is curated: with every org `official: false` today, no row
+# changes, so `validate` stays green.
+OFFICIAL_BADGE = " ✅"
+
+
+def _badge(org: Organization) -> str:
+    """Return the official badge for ``org``, or an empty string."""
+    return OFFICIAL_BADGE if org.official else ""
+
 
 FEDERAL_BEGIN = "<!-- BEGIN FEDERAL LIST -->"
 FEDERAL_END = "<!-- END FEDERAL LIST -->"
@@ -36,7 +46,9 @@ CANTONAL_END = "<!-- END CANTONAL LIST -->"
 
 
 def _federal_block(orgs: list[Organization]) -> str:
-    rows = "".join(f"{o.name}|[Link]({o.url})\n" for o in federal_sorted(orgs))
+    rows = "".join(
+        f"{o.name}|[Link]({o.url}){_badge(o)}\n" for o in federal_sorted(orgs)
+    )
     return f"\n{FEDERAL_HEADER}{rows}\n"
 
 
@@ -50,7 +62,7 @@ def _cantonal_block(orgs: list[Organization]) -> str:
         if not units:
             rows.append(f"{display}|{NONE_KNOWN}\n")
         else:
-            rows.extend(f"{display}|[{o.name}]({o.url})\n" for o in units)
+            rows.extend(f"{display}|[{o.name}]({o.url}){_badge(o)}\n" for o in units)
     return f"\n{CANTONAL_HEADER}{''.join(rows)}\n"
 
 

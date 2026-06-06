@@ -28,9 +28,9 @@ SKELETON = (
 )
 
 
-def _org(name, authority, handle):
+def _org(name, authority, handle, **kw):
     return Organization(
-        name=name, authority=authority, url=f"https://github.com/{handle}"
+        name=name, authority=authority, url=f"https://github.com/{handle}", **kw
     )
 
 
@@ -48,6 +48,22 @@ def test_canton_with_no_org_renders_none_known():
     out = render_readme([_org("Statistics I", "canton:ZH", "stat")], SKELETON)
     # Jura has no org -> derived placeholder row.
     assert "Jura|— none known yet\n" in out
+
+
+def test_official_org_gets_a_badge_in_both_tables():
+    orgs = [
+        _org("Swiss Admin", "federal", "admin-ch", official=True, provenance="reg"),
+        _org("Stat ZH", "canton:ZH", "stat", official=True, provenance="reg"),
+    ]
+    out = render_readme(orgs, SKELETON)
+    assert "Swiss Admin|[Link](https://github.com/admin-ch) ✅\n" in out
+    assert "Zürich|[Stat ZH](https://github.com/stat) ✅\n" in out
+
+
+def test_unofficial_org_has_no_badge():
+    out = render_readme([_org("Swiss Admin", "federal", "admin-ch")], SKELETON)
+    assert "Swiss Admin|[Link](https://github.com/admin-ch)\n" in out
+    assert "✅" not in out
 
 
 def test_federal_sorted_case_insensitively():

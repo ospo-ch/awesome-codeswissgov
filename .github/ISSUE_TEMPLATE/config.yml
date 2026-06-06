@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contribution & governance guide
+    url: https://github.com/ospo-ch/awesome-codeswissgov/blob/main/CONTRIBUTING.md
+    about: How suggestions are reviewed, the provenance policy, and how to edit data/orgs directly.
+  - name: Development guide
+    url: https://github.com/ospo-ch/awesome-codeswissgov/blob/main/DEVELOPMENT.md
+    about: Installation, CLI commands, the data model, and testing.
