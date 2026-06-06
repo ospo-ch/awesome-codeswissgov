@@ -18,11 +18,13 @@ Shared by the ``build`` and ``validate`` CLI commands (T5).
 """
 
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 from .loader import load_organizations
 from .render.inventory import load_harvest, render_inventory
 from .render.readme import render_readme
+from .render.reports import render_reports
 
 # Repo root: src/codeswissgov/build.py -> parents[2].
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
@@ -65,6 +67,25 @@ def build(root: Path = DEFAULT_ROOT) -> RenderResult:
     result.readme_path.write_text(result.readme_text, encoding="utf-8")
     result.inventory_path.write_text(result.inventory_text, encoding="utf-8")
     return result
+
+
+def run_report(root: Path = DEFAULT_ROOT, *, today: date | None = None) -> str:
+    """Render the read-only inventory reports from data/orgs + inventory.json.
+
+    Reuses the build helpers (``load_organizations``, ``load_harvest``) to read
+    the curated orgs and the harvested repos, then delegates to the pure
+    :func:`codeswissgov.render.reports.render_reports`. No network, no writes.
+
+    Args:
+        root: Repository root containing ``data/orgs`` and ``inventory.json``.
+        today: Reference date for staleness; defaults to the current date.
+    """
+    orgs = load_organizations(root / "data" / "orgs")
+    inventory_path = root / "inventory.json"
+    harvest = load_harvest(
+        inventory_path.read_text(encoding="utf-8") if inventory_path.exists() else ""
+    )
+    return render_reports(orgs, harvest, today=today or date.today())
 
 
 def validate(root: Path = DEFAULT_ROOT) -> list[str]:

@@ -19,12 +19,13 @@
 ``harvest``  enrich inventory.json with repo-level data from the GitHub API.
 ``ingest``   reconcile sibling registries (swiss/index) against data/orgs.
 ``check``    detect link rot in the curated org URLs (read-only report).
+``report``   print license / staleness / coverage / EMBAG reports (read-only).
 """
 
 import os
 import sys
 
-from .build import build, validate
+from .build import build, run_report, validate
 from .check import run_check
 from .check.linkrot import render_report as render_linkrot_report
 from .harvest import run_harvest
@@ -33,7 +34,7 @@ from .ingest.registry import IngestError, render_report
 
 USAGE = (
     "usage: python -m codeswissgov "
-    "<build|validate|harvest [--token TOKEN]|ingest|check>"
+    "<build|validate|harvest [--token TOKEN]|ingest|check|report>"
 )
 
 
@@ -110,6 +111,12 @@ def _cmd_check(args: list[str]) -> int:
     return 0
 
 
+def _cmd_report(args: list[str]) -> int:
+    """Print the read-only inventory reports (license / staleness / coverage)."""
+    print(run_report(), end="")
+    return 0
+
+
 def _token(args: list[str]) -> str | None:
     """Resolve a token from ``--token VALUE``/``--token=VALUE`` or env."""
     for i, arg in enumerate(args):
@@ -126,6 +133,7 @@ COMMANDS = {
     "harvest": _cmd_harvest,
     "ingest": _cmd_ingest,
     "check": _cmd_check,
+    "report": _cmd_report,
 }
 
 

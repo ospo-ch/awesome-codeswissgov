@@ -71,6 +71,7 @@ Validate:  python -m codeswissgov validate     # schema-check data/ AND assert b
 Harvest:   python -m codeswissgov harvest --token $GITHUB_TOKEN   # enrich data/ from the GitHub API
 Ingest:    python -m codeswissgov ingest                          # reconcile sibling registries vs data/orgs (read-only report)
 Check:     python -m codeswissgov check                           # detect link rot in curated org URLs (read-only report)
+Report:    python -m codeswissgov report                          # license / staleness / coverage / EMBAG reports (read-only)
 ```
 
 ---
@@ -257,11 +258,18 @@ Fold in the audit backlog so the tool is solid before the refactor.
       ~~transferred~~ repo redirect detection **deferred** as YAGNI (decision
       #11): expensive per-repo redirect chasing with no current consumer.
 
-### Epic 5 — Discovery & reporting
-- [ ] Discovery vectors (org expansion, heuristic search, domain `code.json`
-      probe) produce *suggestions* (never auto-adds).
-- [ ] Reports: license coverage %, stale/archived counts, **authority coverage**
-      ("who publishes nothing"), and an **EMBAG-visibility** view.
+### Epic 5 — Discovery & reporting (trimmed — see decision #12)
+- [x] Reports: license coverage %, stale/archived counts, **authority coverage**
+      ("who publishes nothing", with the GitHub-only caveat printed inline), and
+      an **EMBAG-visibility** (federal) view. `python -m codeswissgov report`
+      renders them from `data/orgs` + `inventory.json`, pure and offline;
+      repo-level sections degrade to "run harvest" until the inventory is
+      populated.
+- [ ] ~~Discovery vectors (org expansion, heuristic search, domain `code.json`
+      probe)~~ — **deferred** (decision #12): `ingest` already discovers via
+      registry, heuristic search would surface out-of-scope municipal noise, and
+      no consumer needs the others yet. The pluggable `RegistrySource` framework
+      (Epic 3) is the seam they slot into later.
 
 ### Epic 6 — Governance & community
 - [ ] Verified-official provenance/badge; suggestion issue templates;
@@ -334,6 +342,19 @@ Fold in the audit backlog so the tool is solid before the refactor.
     already met by Epic 2's harvest (`Repository.archived`) and surfaced in the
     Epic 5 reports; **transferred-repo** redirect detection is **deferred** as
     YAGNI (chasing per-repo redirects is expensive and has no current consumer).
+12. **Epic 5 trimmed to reports; discovery vectors deferred as YAGNI.** The
+    reporting half is load-bearing and shipped (`report`): license coverage %,
+    stale/archived counts, authority coverage ("who publishes nothing", stated
+    with the GitHub-only caveat so the under-count is not misread), and an
+    EMBAG-visibility federal slice — all pure functions over `data/orgs` +
+    `inventory.json`, rendered read-only. The **discovery vectors** (org-member
+    expansion, heuristic search, domain `code.json` probe) are **deferred**:
+    `ingest` already performs registry-based discovery (suggestions, never
+    auto-add); heuristic search (`kanton-*`, `stadt-*`) would surface
+    **municipal** results that are an explicit non-goal; and the others have no
+    consumer yet. They slot into the pluggable `RegistrySource` framework when a
+    real need appears. Re-expanding Epic 5 is a normal backlog decision, not an
+    "ask-first" scope change.
 
 ---
 
