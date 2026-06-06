@@ -205,3 +205,14 @@ def test_check_prints_report_and_succeeds(monkeypatch, capsys):
     out = capsys.readouterr().out
     assert "Link-rot report" in out
     assert "Dead Org: https://github.com/dead" in out
+
+
+# --- report command ---------------------------------------------------------
+
+
+def test_report_prints_inventory_report(capsys):
+    # Runs against the committed data/orgs + inventory.json (offline, no token).
+    assert cli.main(["report"]) == 0
+    out = capsys.readouterr().out
+    assert "# Inventory report" in out
+    assert "## Authority coverage" in out
