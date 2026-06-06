@@ -156,3 +156,34 @@ def _summary(*, refreshed, failed=None):
         repos_total=refreshed,
         orgs_failed=failed,
     )
+
+
+# --- ingest command ---------------------------------------------------------
+
+
+def test_ingest_prints_report_and_succeeds(monkeypatch, capsys):
+    from codeswissgov.ingest.registry import Candidate, ReconciliationReport
+
+    report = ReconciliationReport(
+        missing=[Candidate(url="https://github.com/govcert-ch", source="swiss/index")],
+        matched=[],
+        extra=[],
+        sources=["swiss/index"],
+        skipped=[],
+    )
+    monkeypatch.setattr(cli, "run_ingest", lambda: report)
+    assert cli.main(["ingest"]) == 0
+    out = capsys.readouterr().out
+    assert "Registry reconciliation report" in out
+    assert "https://github.com/govcert-ch" in out
+
+
+def test_ingest_reports_fetch_error(monkeypatch, capsys):
+    from codeswissgov.ingest.registry import IngestError
+
+    def boom():
+        raise IngestError("failed to fetch swiss/index")
+
+    monkeypatch.setattr(cli, "run_ingest", boom)
+    assert cli.main(["ingest"]) == 1
+    assert "failed to fetch" in capsys.readouterr().err

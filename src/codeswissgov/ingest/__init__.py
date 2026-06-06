@@ -21,3 +21,47 @@ reconciliation report — it never mutates ``data/orgs`` (a human reviews the
 report and curates). The :class:`RegistrySource` protocol keeps it pluggable so
 further sources slot in without touching the reconciliation core.
 """
+
+from pathlib import Path
+
+import httpx
+
+from ..build import DEFAULT_ROOT
+from ..loader import load_organizations
+from .registry import ReconciliationReport, RegistrySource, reconcile
+from .swiss_index import SwissIndexSource
+
+# The registries ingested by default. swiss/index is the federal source
+# (SPEC decision #1); the list is the single place to register more sources.
+SOURCES: list[RegistrySource] = [SwissIndexSource()]
+
+
+def run_ingest(
+    root: Path = DEFAULT_ROOT,
+    *,
+    sources: list[RegistrySource] | None = None,
+    client: httpx.Client | None = None,
+) -> ReconciliationReport:
+    """Fetch every registry source and reconcile it against ``data/orgs``.
+
+    Args:
+        root: Repository root containing ``data/orgs``.
+        sources: Registries to ingest; defaults to :data:`SOURCES`.
+        client: Injected ``httpx.Client`` (tests); a default one is created and
+            closed here when omitted.
+
+    Returns:
+        A read-only :class:`ReconciliationReport`. Nothing is written to disk.
+    """
+    sources = SOURCES if sources is None else sources
+    orgs = load_organizations(root / "data" / "orgs")
+
+    owns_client = client is None
+    client = client or httpx.Client(timeout=30.0)
+    try:
+        results = [source.fetch(client) for source in sources]
+    finally:
+        if owns_client:
+            client.close()
+
+    return reconcile(results, orgs)
