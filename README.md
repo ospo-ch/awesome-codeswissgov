@@ -78,75 +78,21 @@ Zürich|[Transport](https://github.com/VerkehrsbetriebeZuerich)
 
 <!-- END CANTONAL LIST -->
 
-## Contributing
+## About this list
 
-`data/orgs/*.yaml` is the **source of truth** — one file per organization. The
-tables above and `inventory.json` are **generated views**; never edit them or
-the rows by hand (a build will overwrite your changes).
+The tables above are **generated** from `data/orgs/*.yaml` (the source of
+truth) — don't edit the rows by hand. Coverage is **GitHub only**: authorities
+that publish solely off GitHub do not appear here, so absence is not evidence
+that an authority publishes nothing.
 
-To add or update an organization:
+## Contributing & development
 
-1. Add or edit a file under `data/orgs/`, e.g. `data/orgs/<github-handle>.yaml`:
-   ```yaml
-   name: Statistics I            # display name (service for federal; unit for cantonal)
-   authority: canton:ZH          # "federal" or "canton:<CODE>" (e.g. canton:BE)
-   url: https://github.com/statistikstadtzuerich
-   official: false               # true only with recorded provenance (see below)
-   provenance: null              # evidence source backing `official`
-   ```
-   A canton with no known GitHub org needs **no** file — the build renders
-   `— none known yet` for it automatically.
-2. Regenerate the views:
-   ```sh
-   pip install -e .
-   python -m codeswissgov build
-   ```
-   The build is deterministic and self-cleaning (orphan rows cannot occur —
-   the tables are rebuilt from `data/orgs/` every time).
-3. Commit the `data/orgs/` change **and** the regenerated `README.md` and
-   `inventory.json`.
+To add or update an organization, edit `data/orgs/` and regenerate the views.
+Full instructions — installation, commands, the data model, harvesting, and
+testing — are in **[DEVELOPMENT.md](./DEVELOPMENT.md)**.
 
-`official: true` is only permitted with a non-empty `provenance` (a registry
-listing, a GitHub verified-domain match, or explicit confirmation); otherwise
-the entry is an unverified candidate.
-
-Development tooling: `pip install -r requirements-dev.txt` then `ruff check .`
-and `pytest`. CI runs lint, tests, and `python -m codeswissgov validate`, which
-fails if `data/orgs/` is invalid or the generated views are out of date.
-
-### Repository-level data (harvest)
-
-`inventory.json` also carries **harvested** repo-level data per organization
-(license, language, topics, last activity, archived state, and `publiccode.yml`
-/ `SECURITY.md` presence). This is produced from the GitHub API — you do not
-edit it by hand:
-
-```sh
-python -m codeswissgov harvest --token "$GITHUB_TOKEN"   # read-only PAT
-```
-
-`harvest` is the only writer of repo-level data; `build` preserves it when it
-regenerates the views. A scheduled workflow refreshes it weekly and opens a PR.
-Coverage is **GitHub only** — authorities that publish solely off GitHub do not
-appear, so absence is not evidence that an authority publishes nothing.
-
-### Ecosystem interop (ingest)
-
-The federal org list is meant to track the upstream
-[`swiss/index`](https://github.com/swiss/index) registry. `ingest` reconciles
-that registry (and any future sibling registries) against `data/orgs` and
-prints a **read-only** report — it never edits `data/orgs`:
-
-```sh
-python -m codeswissgov ingest        # no token needed (public registry)
-```
-
-The report lists orgs present in a registry but **missing** from `data/orgs`
-(the coverage gap to review), with a federal/cantonal hint from the registry's
-section. It is guidance only: a maintainer decides what to add and creates the
-`data/orgs/*.yaml` file by hand (with provenance), so curation stays human.
-Non-GitHub forges (e.g. GitLab entries in `swiss/index`) are reported as
-skipped — coverage is **GitHub only**.
+See also [`SPEC.md`](./SPEC.md) (the buildable contract) and
+[`DESIGN.md`](./DESIGN.md) (strategy and rationale).
 
 ## License 
 
