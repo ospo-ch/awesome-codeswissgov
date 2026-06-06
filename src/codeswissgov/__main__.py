@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""CLI entry point: ``python -m codeswissgov <build|validate|harvest>``.
+"""CLI entry point: ``python -m codeswissgov <build|validate|harvest|ingest>``.
 
 ``build``    regenerate README.md + inventory.json from data/orgs.
 ``validate`` schema-check data/orgs and assert the generated views are current.
 ``harvest``  enrich inventory.json with repo-level data from the GitHub API.
+``ingest``   reconcile sibling registries (swiss/index) against data/orgs.
 """
 
 import os
@@ -24,8 +25,10 @@ import sys
 
 from .build import build, validate
 from .harvest import run_harvest
+from .ingest import run_ingest
+from .ingest.registry import IngestError, render_report
 
-USAGE = "usage: python -m codeswissgov <build|validate|harvest [--token TOKEN]>"
+USAGE = "usage: python -m codeswissgov <build|validate|harvest [--token TOKEN]|ingest>"
 
 
 def _cmd_build(args: list[str]) -> int:
@@ -75,6 +78,21 @@ def _cmd_harvest(args: list[str]) -> int:
     return 1 if summary.orgs_failed and summary.orgs_refreshed == 0 else 0
 
 
+def _cmd_ingest(args: list[str]) -> int:
+    """Reconcile registries against data/orgs and print a read-only report.
+
+    Tokenless (the registry README is a public raw file) and never mutates
+    data/orgs — it only surfaces the coverage gap for a human to curate.
+    """
+    try:
+        report = run_ingest()
+    except IngestError as exc:
+        print(f"ingest: {exc}", file=sys.stderr)
+        return 1
+    print(render_report(report), end="")
+    return 0
+
+
 def _token(args: list[str]) -> str | None:
     """Resolve a token from ``--token VALUE``/``--token=VALUE`` or env."""
     for i, arg in enumerate(args):
@@ -85,7 +103,12 @@ def _token(args: list[str]) -> str | None:
     return os.environ.get("GITHUB_TOKEN")
 
 
-COMMANDS = {"build": _cmd_build, "validate": _cmd_validate, "harvest": _cmd_harvest}
+COMMANDS = {
+    "build": _cmd_build,
+    "validate": _cmd_validate,
+    "harvest": _cmd_harvest,
+    "ingest": _cmd_ingest,
+}
 
 
 def main(argv: list[str] | None = None) -> int:
