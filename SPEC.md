@@ -69,7 +69,8 @@ Coverage:  pytest --cov=codeswissgov --cov-report=term-missing
 Build:     python -m codeswissgov build        # regenerate README.md + inventory.json from data/
 Validate:  python -m codeswissgov validate     # schema-check data/ AND assert build is up to date
 Harvest:   python -m codeswissgov harvest --token $GITHUB_TOKEN   # enrich data/ from the GitHub API
-Discover:  python -m codeswissgov discover --token $GITHUB_TOKEN  # propose new orgs/repos (writes suggestions, never auto-adds)
+Ingest:    python -m codeswissgov ingest                          # reconcile sibling registries vs data/orgs (read-only report)
+Check:     python -m codeswissgov check                           # detect link rot in curated org URLs (read-only report)
 ```
 
 ---
@@ -246,8 +247,15 @@ Fold in the audit backlog so the tool is solid before the refactor.
       — **deferred** (decision #10): speculative until a consumer exists.
 
 ### Epic 4 — Data integrity
-- [ ] Link-rot detection flags 404 / renamed / deleted orgs.
-- [ ] Archived/transferred repos detected and reflected in the inventory.
+- [x] Link-rot detection flags 404 / renamed / deleted orgs. `python -m
+      codeswissgov check` requests each curated `github.com/<login>` page
+      (tokenless, redirects unfollowed) and classifies it alive / renamed (301
+      to a different login) / gone (404), printing a **read-only** report — it
+      never edits `data/orgs` (decision #11).
+- [x] Archived repos detected and reflected in the inventory — harvested as
+      `Repository.archived` (Epic 2) and surfaced in the Epic 5 reports.
+      ~~transferred~~ repo redirect detection **deferred** as YAGNI (decision
+      #11): expensive per-repo redirect chasing with no current consumer.
 
 ### Epic 5 — Discovery & reporting
 - [ ] Discovery vectors (org expansion, heuristic search, domain `code.json`
@@ -313,6 +321,19 @@ Fold in the audit backlog so the tool is solid before the refactor.
     stays pluggable so each slots in when a real need appears (e.g. a Swiss
     second source like opendata.swiss). Re-expanding Epic 3 is a normal
     backlog decision, not an "ask-first" scope change.
+11. **Epic 4 link-rot → tokenless read-only `check`; transferred-repo detection
+    deferred.** Link rot is checked by requesting the public
+    `github.com/<login>` page with redirects unfollowed and reading only the
+    status (+ `Location`): 200 = alive, a 301/302 to a *different* login
+    (compared via `login_key`, so a slash/case redirect to the *same* login is
+    not a false rename) = renamed, 404 = gone. It is **read-only** — like
+    `ingest`, it prints a report for a human to curate and never edits
+    `data/orgs` (consistent with the "never auto-add" / "ask-first on data
+    changes" boundaries). No token: the web page needs no auth, so the check can
+    run anywhere without a secret. The archived half of the second criterion is
+    already met by Epic 2's harvest (`Repository.archived`) and surfaced in the
+    Epic 5 reports; **transferred-repo** redirect detection is **deferred** as
+    YAGNI (chasing per-repo redirects is expensive and has no current consumer).
 
 ---
 

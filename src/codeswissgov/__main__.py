@@ -12,23 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""CLI entry point: ``python -m codeswissgov <build|validate|harvest|ingest>``.
+"""CLI entry point: ``python -m codeswissgov <build|validate|harvest|ingest|check>``.
 
 ``build``    regenerate README.md + inventory.json from data/orgs.
 ``validate`` schema-check data/orgs and assert the generated views are current.
 ``harvest``  enrich inventory.json with repo-level data from the GitHub API.
 ``ingest``   reconcile sibling registries (swiss/index) against data/orgs.
+``check``    detect link rot in the curated org URLs (read-only report).
 """
 
 import os
 import sys
 
 from .build import build, validate
+from .check import run_check
+from .check.linkrot import render_report as render_linkrot_report
 from .harvest import run_harvest
 from .ingest import run_ingest
 from .ingest.registry import IngestError, render_report
 
-USAGE = "usage: python -m codeswissgov <build|validate|harvest [--token TOKEN]|ingest>"
+USAGE = (
+    "usage: python -m codeswissgov "
+    "<build|validate|harvest [--token TOKEN]|ingest|check>"
+)
 
 
 def _cmd_build(args: list[str]) -> int:
@@ -93,6 +99,17 @@ def _cmd_ingest(args: list[str]) -> int:
     return 0
 
 
+def _cmd_check(args: list[str]) -> int:
+    """Check the curated org URLs for link rot and print a read-only report.
+
+    Tokenless (public github.com pages) and never mutates data/orgs — it only
+    surfaces renamed/deleted orgs for a human to curate.
+    """
+    report = run_check()
+    print(render_linkrot_report(report), end="")
+    return 0
+
+
 def _token(args: list[str]) -> str | None:
     """Resolve a token from ``--token VALUE``/``--token=VALUE`` or env."""
     for i, arg in enumerate(args):
@@ -108,6 +125,7 @@ COMMANDS = {
     "validate": _cmd_validate,
     "harvest": _cmd_harvest,
     "ingest": _cmd_ingest,
+    "check": _cmd_check,
 }
 
 
