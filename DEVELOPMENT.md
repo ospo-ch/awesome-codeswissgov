@@ -29,7 +29,7 @@ gate) fails if the committed views are out of date.
 
 ```
 src/codeswissgov/
-  __main__.py        → CLI dispatch (build | validate | harvest | ingest)
+  __main__.py        → CLI dispatch (build | validate | harvest | ingest | check)
   models.py          → pydantic models: Organization, Repository
   loader.py          → load + validate data/orgs/*.yaml
   build.py           → render_all / build / validate
@@ -46,6 +46,9 @@ src/codeswissgov/
     __init__.py      → run_ingest orchestration
     registry.py      → Candidate model, RegistrySource, reconcile, render_report
     swiss_index.py   → swiss/index registry source
+  check/
+    __init__.py      → run_check orchestration + fetch_status (HTTP)
+    linkrot.py       → classify + build_report + render_report (pure)
 data/orgs/*.yaml     → SOURCE OF TRUTH (curated, git-tracked)
 tests/               → pytest unit + fixture-based tests
   fixtures/          → recorded API / registry responses
@@ -78,12 +81,14 @@ All commands run as `python -m codeswissgov <command>`.
 | `validate` | Schema-check `data/orgs/` **and** assert the generated views are up to date (the CI gate). |
 | `harvest` | Enrich `inventory.json` with repo-level data from the GitHub API. |
 | `ingest` | Reconcile sibling registries (`swiss/index`) against `data/orgs/`; print a read-only report. |
+| `check` | Detect link rot in the curated org URLs (404 / renamed); print a read-only report. |
 
 ```sh
 python -m codeswissgov build
 python -m codeswissgov validate
 python -m codeswissgov harvest --token "$GITHUB_TOKEN"   # or $GITHUB_TOKEN in env
 python -m codeswissgov ingest                            # no token needed
+python -m codeswissgov check                             # no token needed
 ```
 
 ## Contributing
@@ -168,6 +173,30 @@ The report lists orgs present in a registry but **missing** from `data/orgs/`
 section. It is guidance only: a maintainer decides what to add and creates the
 YAML file by hand (with provenance), so curation stays human. Non-GitHub forges
 (e.g. GitLab entries in `swiss/index`) are reported as skipped.
+
+## Link-rot detection (check)
+
+Curated org URLs go stale when an organization is renamed or deleted on GitHub.
+`check` requests each `github.com/<login>` page (tokenless, redirects
+**unfollowed**) and reads only the status and any `Location` header:
+
+```sh
+python -m codeswissgov check        # no token needed (public pages)
+```
+
+- `200` → **alive**.
+- `301`/`302` to a *different* login → **renamed** (the report shows the new
+  URL). A redirect to the *same* login — GitHub normalizing case or a trailing
+  slash — is treated as alive, not a false rename.
+- `404` → **gone**.
+- a transport failure → **could not be checked** (one flaky URL never aborts the
+  run).
+
+Like `ingest`, the report is **read-only guidance**: it names the renamed/gone
+orgs and the action to take, but never edits `data/orgs` — a maintainer makes
+the change by hand. Classification and rendering are pure
+(`check/linkrot.py`); the single HTTP call is isolated in `check/__init__.py`
+(`fetch_status`), so tests run offline.
 
 ## Testing & linting
 

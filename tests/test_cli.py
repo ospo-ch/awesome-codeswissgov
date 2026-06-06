@@ -187,3 +187,21 @@ def test_ingest_reports_fetch_error(monkeypatch, capsys):
     monkeypatch.setattr(cli, "run_ingest", boom)
     assert cli.main(["ingest"]) == 1
     assert "failed to fetch" in capsys.readouterr().err
+
+
+# --- check command ----------------------------------------------------------
+
+
+def test_check_prints_report_and_succeeds(monkeypatch, capsys):
+    from codeswissgov.check.linkrot import GONE, LinkResult, build_report
+    from codeswissgov.models import Organization
+
+    org = Organization(
+        name="Dead Org", authority="federal", url="https://github.com/dead"
+    )
+    report = build_report([LinkResult(org, GONE)])
+    monkeypatch.setattr(cli, "run_check", lambda: report)
+    assert cli.main(["check"]) == 0
+    out = capsys.readouterr().out
+    assert "Link-rot report" in out
+    assert "Dead Org: https://github.com/dead" in out
