@@ -33,8 +33,11 @@ import httpx
 
 from ..build import DEFAULT_ROOT
 from ..loader import load_organizations
+from ..orgurl import org_login
 from ..render.inventory import OrgHarvest, load_harvest, render_inventory
 from .github import GitHubClient, GitHubError
+
+__all__ = ["HarvestSummary", "org_login", "run_harvest"]
 
 
 @dataclass(frozen=True)
@@ -45,15 +48,6 @@ class HarvestSummary:
     orgs_refreshed: int
     repos_total: int
     orgs_failed: list[str] = field(default_factory=list)
-
-
-def org_login(url: str) -> str:
-    """Extract the GitHub org login from an organization URL.
-
-    ``https://github.com/admin-ch`` and ``.../cdc-si/`` both -> the last
-    path segment, tolerating a trailing slash.
-    """
-    return url.rstrip("/").rsplit("/", 1)[-1]
 
 
 def _utc_now() -> str:
