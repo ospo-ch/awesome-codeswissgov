@@ -85,11 +85,20 @@ truth) — don't edit the rows by hand. Coverage is **GitHub only**: authorities
 that publish solely off GitHub do not appear here, so absence is not evidence
 that an authority publishes nothing.
 
+A ✅ next to an entry marks a **verified-official** organization (backed by
+recorded provenance). Entries without it are unverified candidates — see the
+provenance policy in [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ## Contributing & development
 
-To add or update an organization, edit `data/orgs/` and regenerate the views.
-Full instructions — installation, commands, the data model, harvesting, and
-testing — are in **[DEVELOPMENT.md](./DEVELOPMENT.md)**.
+Spotted a missing authority? Open a **[suggestion
+issue](../../issues/new/choose)** — no GitHub know-how needed. How suggestions
+are reviewed, what makes an org "official", and the project's governance are in
+**[CONTRIBUTING.md](./CONTRIBUTING.md)**.
+
+To add or update an organization yourself, edit `data/orgs/` and regenerate the
+views. Full instructions — installation, commands, the data model, harvesting,
+and testing — are in **[DEVELOPMENT.md](./DEVELOPMENT.md)**.
 
 See also [`SPEC.md`](./SPEC.md) (the buildable contract) and
 [`DESIGN.md`](./DESIGN.md) (strategy and rationale).

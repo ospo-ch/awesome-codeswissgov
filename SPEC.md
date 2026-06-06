@@ -271,9 +271,14 @@ Fold in the audit backlog so the tool is solid before the refactor.
       no consumer needs the others yet. The pluggable `RegistrySource` framework
       (Epic 3) is the seam they slot into later.
 
-### Epic 6 — Governance & community
-- [ ] Verified-official provenance/badge; suggestion issue templates;
-      contribution governance documented.
+### Epic 6 — Governance & community (mechanics only — see decision #13)
+- [x] Verified-official **badge** (✅) rendered for `official: true` orgs in the
+      README tables; **suggestion issue template**
+      (`.github/ISSUE_TEMPLATE/suggest-org.yml`); contribution **governance**
+      documented (`CONTRIBUTING.md`: scope, provenance policy, read-only-tools
+      curation). Populating `official`/`provenance` across `data/orgs` is left
+      to human curation — a bulk data change is "ask first" (decision #13), so
+      the badge is dormant until an org is verified.
 
 ---
 
@@ -355,6 +360,17 @@ Fold in the audit backlog so the tool is solid before the refactor.
     consumer yet. They slot into the pluggable `RegistrySource` framework when a
     real need appears. Re-expanding Epic 5 is a normal backlog decision, not an
     "ask-first" scope change.
+13. **Epic 6 → governance mechanics only; provenance population stays human.**
+    The mechanics ship: a ✅ verified-official badge in the README renderer (for
+    `official: true` rows), a `suggest-org` issue-form template
+    (`blank_issues_enabled: false`, with contact links to the guides), and
+    `CONTRIBUTING.md` documenting scope, the provenance policy (decision #5),
+    and the "tools surface gaps; humans curate" philosophy. **Populating**
+    `official`/`provenance` is deliberately *not* part of this epic: setting
+    orgs official in bulk (e.g. from a `swiss/index` listing) is a data change,
+    and bulk data changes / marking orgs official are "ask-first" boundaries.
+    The badge therefore renders nothing until a maintainer curates provenance —
+    intended, not a gap. No committed view changes, so `validate` stays green.
 
 ---
 

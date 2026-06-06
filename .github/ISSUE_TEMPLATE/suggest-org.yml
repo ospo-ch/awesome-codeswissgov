@@ -1,0 +1,66 @@
+name: Suggest an organization
+description: Propose a Swiss public-sector GitHub org to add to the inventory.
+title: "[suggestion]: <organization name>"
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping grow the inventory! A maintainer reviews every
+        suggestion and curates `data/orgs/` by hand — nothing is added
+        automatically. Two scope rules keep the list focused (see
+        [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md)):
+        **GitHub only** (GitLab / Bitbucket are out of scope) and
+        **federal or cantonal** authorities only (municipal is out of scope).
+  - type: input
+    id: name
+    attributes:
+      label: Display name
+      description: The service (federal) or unit (cantonal) name to show in the list.
+      placeholder: Federal Office of Topography
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: GitHub organization URL
+      placeholder: https://github.com/swisstopo
+    validations:
+      required: true
+  - type: dropdown
+    id: authority
+    attributes:
+      label: Authority level
+      options:
+        - Federal
+        - Cantonal
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: canton
+    attributes:
+      label: Canton (if cantonal)
+      description: ISO 3166-2:CH code, e.g. ZH, BE, VD. Leave blank for federal.
+      placeholder: ZH
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Evidence / provenance
+      description: >
+        How do we know this org is official? A registry listing (e.g.
+        swiss/index), a GitHub verified-domain match to an *.admin.ch /
+        *.<canton>.ch domain, or an explicit confirmation. Without evidence the
+        entry is recorded as an unverified candidate.
+      placeholder: Listed in github.com/swiss/index; GitHub-verified swisstopo.admin.ch
+    validations:
+      required: false
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This is a GitHub organization (not GitLab, Bitbucket, or another forge).
+          required: true
+        - label: This is a federal or cantonal authority (not a municipality).
+          required: true
