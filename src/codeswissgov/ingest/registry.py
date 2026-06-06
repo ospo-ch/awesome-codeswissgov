@@ -36,6 +36,10 @@ FEDERAL_HINT = "federal"
 CANTONAL_HINT = "cantonal"
 
 
+class IngestError(RuntimeError):
+    """A registry could not be fetched or parsed."""
+
+
 class Candidate(BaseModel):
     """A GitHub org URL surfaced by a registry, with its provenance.
 
