@@ -14,8 +14,10 @@
 
 """Unit tests for registry candidates and pure reconciliation."""
 
+import httpx
 import pytest
 
+from codeswissgov.ingest import run_ingest
 from codeswissgov.ingest.registry import (
     Candidate,
     ReconciliationReport,
@@ -23,6 +25,7 @@ from codeswissgov.ingest.registry import (
     reconcile,
     render_report,
 )
+from codeswissgov.loader import load_organizations
 from codeswissgov.models import Organization
 
 
@@ -122,3 +125,28 @@ def test_render_report_handles_no_missing():
     )
     text = render_report(report)
     assert "- (none)" in text
+
+
+class _FakeSource:
+    """A RegistrySource that returns a fixed result without any network."""
+
+    name = "fake"
+
+    def fetch(self, client: httpx.Client) -> SourceResult:
+        return SourceResult(
+            name=self.name,
+            candidates=[_cand("https://github.com/brand-new", source="fake")],
+            skipped=["https://gitlab.com/x"],
+        )
+
+
+def test_run_ingest_reconciles_real_data_orgs_offline(repo_root):
+    # Injected source + client => no network; reconciles against committed orgs.
+    report = run_ingest(repo_root, sources=[_FakeSource()], client=httpx.Client())
+    assert [c.url for c in report.missing] == ["https://github.com/brand-new"]
+    assert report.sources == ["fake"]
+    assert report.skipped == ["https://gitlab.com/x"]
+    # The committed orgs are absent from this fake source, so all land in
+    # `extra` and none match.
+    assert report.matched == []
+    assert len(report.extra) == len(load_organizations(repo_root / "data" / "orgs"))
